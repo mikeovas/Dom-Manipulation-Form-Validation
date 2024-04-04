@@ -12,37 +12,25 @@ const isValidPassword = () => /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*$/.test(password
 // Email must contain an @ symbol and a domain name
 const isValidEmail = () => /^[^@]+@[^@.]+\.[a-z]+$/i.test(emailInput.value);
 
+
+
 form.addEventListener("submit", (e) => {
 
-  if(isValidUsername()) {
-    usernameInput.closest('label').classList.add('valid');
-    usernameInput.nextElementSibling.style.display = 'none';
-  } else {
-    e.preventDefault();
-    usernameInput.closest('label').classList.add('error');
-    usernameInput.nextElementSibling.style.display = 'block';
-  }
+  const validator = (inputElement, validationFunction) => {
+    if(validationFunction()) {
+      inputElement.closest('label').classList.add('valid');
+      inputElement.nextElementSibling.style.display = 'none';
+    } else {
+      e.preventDefault();
+      inputElement.closest('label').classList.add('error');
+      inputElement.nextElementSibling.style.display = 'block';
+    }};
 
-  if(isValidEmail()) {
-    emailInput.closest('label').classList.add('valid');
-    emailInput.nextElementSibling.style.display = 'none';
-  } else {
-    e.preventDefault();
-    emailInput.closest('label').classList.add('error');
-    emailInput.nextElementSibling.style.display = 'block';
-  }
-
-  if(isValidPassword()) {
-    passwordInput.closest('label').classList.add('valid');
-    passwordInput.nextElementSibling.style.display = 'none';
-  } else {
-    e.preventDefault();
-    passwordInput.closest('label').classList.add('error');
-    passwordInput.nextElementSibling.style.display = 'block';
-  }
-
+    validator(usernameInput, isValidUsername);
+    validator(emailInput, isValidEmail);
+    validator(passwordInput, isValidPassword);
+    
 });
-
 
 
 
